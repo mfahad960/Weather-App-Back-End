@@ -1,0 +1,35 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
+
+# Clone the backend repository
+# - script: |
+#     git clone https://github.com/mfahad960/Weather-App-Back-End.git backend
+#   displayName: 'Clone Backend Repository'
+
+# Install backend
+- script: |
+    npm install
+  displayName: 'Install Dependencies'
+  
+- task: ArchiveFiles@2
+  displayName: 'Archive build'
+  inputs:
+    rootFolderOrFile: .
+    includeRootFolder: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
